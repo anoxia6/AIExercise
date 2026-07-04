@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".LoginActivity">
+
+    <!-- 顶部装饰 -->
+    <View
+        android:id="@+id/topDecoration"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/circle_background"
+        android:alpha="0.1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="-100dp"
+        android:layout_marginEnd="-100dp" />
+
+    <!-- 主标题 -->
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="欢迎回来"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="#1A1A1A"
+        android:shadowColor="#FFFFFF"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="120dp"/>
+
+    <TextView
+        android:id="@+id/textViewSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录您的SportAI账户"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:shadowColor="#FFFFFF"
+        android:shadowDx="0.5"
+        android:shadowDy="0.5"
+        android:shadowRadius="1"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!-- 登录卡片 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/loginCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="60dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSubtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <!-- 账号输入框 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/input_background_selector"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_home"
+                    android:alpha="0.6"
+                    android:layout_marginEnd="12dp" />
+
+                <EditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="请输入账号"
+                    android:inputType="textEmailAddress"
+                    android:background="@android:color/transparent"
+                    android:textSize="16sp"
+                    android:textColor="#1A1A1A"
+                    android:textColorHint="#999999" />
+            </LinearLayout>
+
+            <!-- 密码输入框 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/input_background_selector"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_home"
+                    android:alpha="0.6"
+                    android:layout_marginEnd="12dp" />
+
+                <EditText
+                    android:id="@+id/editTextPassword"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="请输入密码"
+                    android:inputType="textPassword"
+                    android:background="@android:color/transparent"
+                    android:textSize="16sp"
+                    android:textColor="#1A1A1A"
+                    android:textColorHint="#999999" />
+            </LinearLayout>
+
+            <!-- 登录按钮 -->
+            <Button
+                android:id="@+id/buttonLogin"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="登录"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/button_primary_background"
+                android:layout_marginBottom="16dp" />
+
+            <!-- 注册按钮 -->
+            <Button
+                android:id="@+id/buttonGoToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="还没有账户？点此注册"
+                android:textSize="16sp"
+                android:textColor="#CCFFFF"
+                android:background="@drawable/button_outline_background" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 底部装饰 -->
+    <View
+        android:id="@+id/bottomDecoration"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/circle_background"
+        android:alpha="0.1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="-75dp"
+        android:layout_marginStart="-75dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

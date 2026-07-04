@@ -1,0 +1,74 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    namespace 'com.example.mygo'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.example.mygo"
+        minSdk 24
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        // 添加这个 ndk 代码块来确保所有必要的原生库 (.so 文件)都被打包进 APK
+        // 解决了 "can't create LibVLC instance" 的问题
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64', 'x86'
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    // 开启 View Binding，可以更方便地访问视图
+    buildFeatures {
+        viewBinding true
+    }
+
+}
+
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+    // MJPEG 视频流库
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // --- 修改开始 ---
+    // 移除所有之前尝试过的、有问题的视频库
+    // implementation 'org.videolan.android:libvlc-all:3.5.4'
+
+    // 添加你找到的、能正常工作的库
+    implementation 'com.github.niqdev:ipcam-view:2.4.1'
+    // 这个库需要 RxJava 作为依赖
+    //implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    //implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    // --- 修改结束 ---
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+}

@@ -1,0 +1,28 @@
+<resources>
+    <!-- Base Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Xiaomi Health Palette -->
+    <color name="xm_bg_top">#EBF9FA</color> <!-- Faint Cyan Gradient Top -->
+    <color name="xm_bg_bottom">#FFFFFF</color> <!-- White Gradient Bottom -->
+    <color name="xm_bg_main">#F5F6F8</color> <!-- Slight off-white for main bg if needed -->
+    
+    <!-- Text Colors -->
+    <color name="xm_text_title">#111111</color> <!-- Deep Black for values/titles -->
+    <color name="xm_text_value">#000000</color> <!-- Solid Black -->
+    <color name="xm_text_label">#999999</color> <!-- Muted grey for sub-labels -->
+    <color name="xm_text_label_light">#B0B0B0</color> <!-- Lighter grey -->
+    
+    <!-- Accent Colors -->
+    <color name="xm_orange">#FF5E00</color> <!-- Primary Activity Orange -->
+    <color name="xm_orange_light">#FFF1E8</color> <!-- Very light orange bg for icons -->
+    <color name="xm_blue">#03A9F4</color>
+    <color name="xm_blue_light">#E1F5FE</color>
+    <color name="xm_purple">#7E57C2</color>
+    <color name="xm_purple_light">#EDE7F6</color>
+    <color name="xm_red">#FF5252</color>
+    <color name="xm_red_light">#FFEBEE</color>
+    <color name="xm_green">#4CAF50</color>
+    <color name="xm_green_light">#E8F5E9</color>
+</resources>

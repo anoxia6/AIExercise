@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.Mygo" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/xm_orange</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/xm_bg_main</item>
+        <!-- Ensure text colors default to our deep black in light theme -->
+        <item name="android:textColorPrimary">@color/xm_text_title</item>
+        <item name="android:textColorSecondary">@color/xm_text_label</item>
+    </style>
+
+    <style name="Theme.Mygo" parent="Base.Theme.Mygo" />
+</resources>

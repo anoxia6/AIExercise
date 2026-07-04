@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="MjpegView">
+        <attr name="mjpeg_type" format="string|integer" />
+    </declare-styleable>
+</resources>
