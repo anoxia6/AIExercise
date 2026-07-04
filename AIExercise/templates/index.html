@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能健身实时监控</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#36D399',
+            accent: '#F87272',
+            dark: '#1E293B',
+            light: '#F8FAFC'
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .shadow-soft {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      }
+      .backdrop-blur {
+        backdrop-filter: blur(8px);
+      }
+      .animate-pulse-slow {
+        animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
+  </style>
+</head>
+<body class="font-inter min-h-screen bg-gradient-to-br from-blue-100 via-green-100 to-orange-100 relative">
+  <!-- 背景纹理图层 -->
+  <div class="absolute inset-0 bg-[url('https://www.toptal.com/designers/subtlepatterns/uploads/dot-grid.png')] opacity-10 z-0"></div>
+  <!-- 顶部导航栏 -->
+  <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur shadow-soft z-50 transition-all duration-300">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <i class="fa fa-heartbeat text-primary text-2xl"></i>
+        <h1 class="text-xl md:text-2xl font-bold text-dark">Prime<span class="text-primary">Ciallo</span></h1>
+      </div>
+      <div class="hidden md:flex items-center space-x-6">
+        <a href="#" class="text-gray-600 hover:text-primary transition-colors">首页</a>
+        <a href="#" class="text-gray-600 hover:text-primary transition-colors">历史记录</a>
+        <a href="#" class="text-gray-600 hover:text-primary transition-colors">数据分析</a>
+        <a href="#" class="text-gray-600 hover:text-primary transition-colors">设置</a>
+      </div>
+      <div class="md:hidden">
+        <button class="text-gray-600 focus:outline-none">
+          <i class="fa fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主内容区 -->
+  <main class="container mx-auto px-4 pt-24 pb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- 左侧视频区域 -->
+      <div class="lg:col-span-8 bg-white rounded-xl shadow-soft overflow-hidden transform hover:scale-[1.01] transition-all duration-300">
+        <div class="bg-primary p-4 flex items-center justify-between">
+          <h2 class="text-white font-bold text-lg flex items-center">
+            <i class="fa fa-video-camera mr-2"></i>
+            实时监控画面
+          </h2>
+          <div class="flex items-center space-x-3">
+            <span class="flex items-center text-white/80 text-sm">
+              <span class="inline-block w-2 h-2 bg-accent rounded-full animate-pulse mr-2"></span>
+              正在直播
+            </span>
+            <button class="bg-white/20 hover:bg-white/30 text-white rounded-full p-2 transition-colors">
+              <i class="fa fa-expand"></i>
+            </button>
+          </div>
+        </div>
+        <div class="relative bg-gray-900 aspect-video">
+          <img src="/video_feed" alt="实时视频流" class="w-full h-full object-contain" id="video-feed">
+          <div class="absolute bottom-4 left-4 bg-dark/70 text-white px-3 py-1 rounded-full text-sm backdrop-blur">
+            <i class="fa fa-clock-o mr-1"></i>
+            <span id="stream-time">00:00:00</span>
+          </div>
+        </div>
+        <div class="p-4 bg-gray-50 border-t border-gray-100">
+          <div class="flex justify-between items-center">
+            <div>
+              <span class="text-sm text-gray-500">当前活动:</span>
+              <span class="font-medium ml-2" id="current-activity">俯卧撑</span>
+            </div>
+            <div class="flex space-x-3">
+              <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-full p-2 transition-colors">
+                <i class="fa fa-pause"></i>
+              </button>
+              <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-full p-2 transition-colors">
+                <i class="fa fa-refresh"></i>
+              </button>
+              <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-full p-2 transition-colors">
+                <i class="fa fa-cog"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧信息面板 -->
+      <div class="lg:col-span-4 space-y-6">
+        <!-- 活动统计卡片 -->
+        <div class="bg-white rounded-xl shadow-soft p-5 transform hover:translate-y-[-5px] transition-all duration-300">
+          <h3 class="text-lg font-bold text-dark mb-4 flex items-center">
+            <i class="fa fa-bar-chart text-primary mr-2"></i>
+            活动统计
+          </h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-blue-50 rounded-lg p-3">
+              <p class="text-sm text-gray-500 mb-1">完成次数</p>
+              <p class="text-2xl font-bold text-primary" id="repetition-count">0</p>
+            </div>
+            <div class="bg-red-50 rounded-lg p-3">
+              <p class="text-sm text-gray-500 mb-1">不规范次数</p>
+              <p class="text-2xl font-bold text-accent" id="irregular-count">0</p>
+            </div>
+            <div class="bg-green-50 rounded-lg p-3">
+              <p class="text-sm text-gray-500 mb-1">得分</p>
+              <p class="text-2xl font-bold text-secondary" id="score">100</p>
+            </div>
+            <div class="bg-yellow-50 rounded-lg p-3">
+              <p class="text-sm text-gray-500 mb-1">卡路里</p>
+              <p class="text-2xl font-bold text-yellow-500" id="calories">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 实时提示卡片 -->
+        <div class="bg-white rounded-xl shadow-soft p-5 transform hover:translate-y-[-5px] transition-all duration-300">
+          <h3 class="text-lg font-bold text-dark mb-4 flex items-center">
+            <i class="fa fa-lightbulb-o text-yellow-500 mr-2"></i>
+            实时提示
+          </h3>
+          <div class="bg-blue-50 border-l-4 border-primary p-4 rounded-r-lg" id="activity-tip">
+            <p class="text-gray-700">你的姿势非常标准！继续保持！</p>
+          </div>
+        </div>
+
+        <!-- 历史记录卡片 -->
+        <div class="bg-white rounded-xl shadow-soft p-5 transform hover:translate-y-[-5px] transition-all duration-300">
+          <h3 class="text-lg font-bold text-dark mb-4 flex items-center">
+            <i class="fa fa-history text-gray-600 mr-2"></i>
+            最近活动
+          </h3>
+          <div class="space-y-3 max-h-64 overflow-y-auto pr-2">
+            <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+              <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <i class="fa fa-check"></i>
+              </div>
+              <div class="ml-3 flex-1">
+                <p class="font-medium">俯卧撑</p>
+                <p class="text-xs text-gray-500">10次 · 今天 14:30</p>
+              </div>
+              <span class="text-secondary font-medium">95分</span>
+            </div>
+            <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+              <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <i class="fa fa-check"></i>
+              </div>
+              <div class="ml-3 flex-1">
+                <p class="font-medium">深蹲</p>
+                <p class="text-xs text-gray-500">15次 · 今天 13:15</p>
+              </div>
+              <span class="text-secondary font-medium">92分</span>
+            </div>
+            <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+              <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <i class="fa fa-check"></i>
+              </div>
+              <div class="ml-3 flex-1">
+                <p class="font-medium">仰卧起坐</p>
+                <p class="text-xs text-gray-500">8次 · 昨天 18:45</p>
+              </div>
+              <span class="text-secondary font-medium">88分</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 底部信息 -->
+  <footer class="bg-dark text-white/70 py-6">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+        </div>
+        <div class="flex space-x-6">
+          <a href="#" class="hover:text-white transition-colors">
+            <i class="fa fa-facebook"></i>
+          </a>
+          <a href="#" class="hover:text-white transition-colors">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <a href="#" class="hover:text-white transition-colors">
+            <i class="fa fa-instagram"></i>
+          </a>
+          <a href="#" class="hover:text-white transition-colors">
+            <i class="fa fa-github"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 计时器功能
+    let startTime = null;
+    const streamTimeElement = document.getElementById('stream-time');
+    
+    function updateStreamTime() {
+      if (!startTime) startTime = new Date();
+      const now = new Date();
+      const diff = Math.floor((now - startTime) / 1000);
+      
+      const hours = Math.floor(diff / 3600).toString().padStart(2, '0');
+      const minutes = Math.floor((diff % 3600) / 60).toString().padStart(2, '0');
+      const seconds = (diff % 60).toString().padStart(2, '0');
+      
+      streamTimeElement.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+    
+    setInterval(updateStreamTime, 1000);
+    
+    // 模拟数据更新
+    function updateActivityData() {
+      // 这里应该通过WebSocket或定期AJAX请求从服务器获取真实数据
+      // 为了演示，我们随机更新一些数据
+      
+      const activities = ['俯卧撑', '深蹲', '仰卧起坐', '平板支撑'];
+      const tips = [
+        '你的姿势非常标准！继续保持！',
+        '身体下沉过低，可能会导致肩部受伤。',
+        '向下动作不够到位哦。',
+        '向上动作不够到位哦。',
+        '注意你的后腿着地了哦。',
+        '注意双手抱头哦。',
+        '注意双腿不要抬起哦。'
+      ];
+      
+      // 随机更新活动类型
+      if (Math.random() < 0) {
+        const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+        document.getElementById('current-activity').textContent = '深蹲';
+      }
+      
+      // 随机更新提示
+      if (Math.random() < 0) {
+        const randomTip = tips[Math.floor(Math.random() * tips.length)];
+        document.getElementById('activity-tip').textContent = randomTip;
+      }
+      
+      // 随机增加计数
+      if (Math.random() < 0) {
+        const currentCount = parseInt(document.getElementById('repetition-count').textContent);
+        document.getElementById('repetition-count').textContent = currentCount + 1;
+        
+        // 随机增加不规范计数
+        if (Math.random() < 0) {
+          const currentIrregular = parseInt(document.getElementById('irregular-count').textContent);
+          document.getElementById('irregular-count').textContent = currentIrregular + 1;
+        }
+        
+        // 随机更新分数
+        const currentScore = parseInt(document.getElementById('score').textContent);
+        let newScore = currentScore - Math.floor(Math.random() * 3);
+        newScore = Math.max(0, newScore);
+        document.getElementById('score').textContent = newScore;
+        
+        // 更新卡路里
+        const currentCalories = parseInt(document.getElementById('calories').textContent);
+        document.getElementById('calories').textContent = currentCalories + 1;
+      }
+    }
+    
+    setInterval(updateActivityData, 2000);
+    
+    // 视频加载错误处理
+    const videoFeed = document.getElementById('video_feed');
+    videoFeed.onerror = function() {
+      // 显示错误信息或重试逻辑
+      console.log('视频流加载失败，正在重试...');
+      setTimeout(() => {
+        videoFeed.src = '/video_feed?' + new Date().getTime();
+      }, 3000);
+    };
+  </script>
+</body>
+</html>    
